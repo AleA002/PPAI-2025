@@ -1,0 +1,180 @@
+[
+  {
+    "fechaHoraCierre": "2025-05-24T10:00:00",
+    "fechaHoraFinalizacion": "2025-05-23T18:00:00",
+    "fechaHoraInicio": "2025-05-23T08:00:00",
+    "numeroOrden": 1,
+    "observacionCierre": "Revisión finalizada con recomendaciones.",
+    "estacionSismologica": {
+      "codigoEstacion": "EST-CBA-001",
+      "documentoCertificacionAdq": "DOC-CBA-2025",
+      "fechaSolicitudCertificacion": "2025-04-10T00:00:00",
+      "latitud": -31.4167,
+      "longitud": -64.1833,
+      "nombre": "Estación Sismológica Córdoba",
+      "nroCertificacionAdquisicion": "CBA-98765"
+    },
+    "empleado": {
+      "apellido": "González",
+      "mail": "mgonzalez@example.com",
+      "nombre": "María",
+      "telefono": "351-1234567"
+    },
+    "estado": {
+      "ambito": "General",
+      "nombreEstado": "Pendiente"
+    }
+  },
+  {
+    "fechaHoraCierre": "2025-05-22T14:30:00",
+    "fechaHoraFinalizacion": "2025-05-21T16:45:00",
+    "fechaHoraInicio": "2025-05-21T07:30:00",
+    "numeroOrden": 2,
+    "observacionCierre": "Equipo operativo sin novedades.",
+    "estacionSismologica": {
+      "codigoEstacion": "EST-BA-002",
+      "documentoCertificacionAdq": "DOC-BA-2025",
+      "fechaSolicitudCertificacion": "2025-03-22T00:00:00",
+      "latitud": -34.6037,
+      "longitud": -58.3816,
+      "nombre": "Estación Sismológica Buenos Aires",
+      "nroCertificacionAdquisicion": "BA-12345"
+    },
+    "empleado": {
+      "apellido": "Rodríguez",
+      "mail": "jrodriguez@example.com",
+      "nombre": "Juan",
+      "telefono": "11-7654321"
+    },
+    "estado": {
+      "ambito": "General",
+      "nombreEstado": "Cerrado"
+    }
+  },
+  {
+    "fechaHoraCierre": "2025-05-20T12:00:00",
+    "fechaHoraFinalizacion": "2025-05-19T15:00:00",
+    "fechaHoraInicio": "2025-05-19T09:00:00",
+    "numeroOrden": 3,
+    "observacionCierre": "Falla menor corregida en sensor.",
+    "estacionSismologica": {
+      "codigoEstacion": "EST-CBA-001",
+      "documentoCertificacionAdq": "DOC-CBA-2025",
+      "fechaSolicitudCertificacion": "2025-04-10T00:00:00",
+      "latitud": -31.4167,
+      "longitud": -64.1833,
+      "nombre": "Estación Sismológica Córdoba",
+      "nroCertificacionAdquisicion": "CBA-98765"
+    },
+    "empleado": {
+      "apellido": "Fernández",
+      "mail": "cfernandez@example.com",
+      "nombre": "Carla",
+      "telefono": "261-3344556"
+    },
+    "estado": {
+      "ambito": "General",
+      "nombreEstado": "En progreso"
+    }
+  },
+  {
+    "fechaHoraCierre": "2025-05-18T17:45:00",
+    "fechaHoraFinalizacion": "2025-05-17T17:00:00",
+    "fechaHoraInicio": "2025-05-17T08:15:00",
+    "numeroOrden": 4,
+    "observacionCierre": "Se cambió módulo de comunicación.",
+    "estacionSismologica": {
+      "codigoEstacion": "EST-BA-002",
+      "documentoCertificacionAdq": "DOC-BA-2025",
+      "fechaSolicitudCertificacion": "2025-03-22T00:00:00",
+      "latitud": -34.6037,
+      "longitud": -58.3816,
+      "nombre": "Estación Sismológica Buenos Aires",
+      "nroCertificacionAdquisicion": "BA-12345"
+    },
+    "empleado": {
+      "apellido": "González",
+      "mail": "mgonzalez@example.com",
+      "nombre": "María",
+      "telefono": "351-1234567"
+    },
+    "estado": {
+      "ambito": "General",
+      "nombreEstado": "Pendiente"
+    }
+  },
+  {
+    "fechaHoraCierre": "2025-05-16T11:20:00",
+    "fechaHoraFinalizacion": "2025-05-15T16:10:00",
+    "fechaHoraInicio": "2025-05-15T07:45:00",
+    "numeroOrden": 5,
+    "observacionCierre": "Se recalibraron sensores.",
+    "estacionSismologica": {
+      "codigoEstacion": "EST-CBA-001",
+      "documentoCertificacionAdq": "DOC-CBA-2025",
+      "fechaSolicitudCertificacion": "2025-04-10T00:00:00",
+      "latitud": -31.4167,
+      "longitud": -64.1833,
+      "nombre": "Estación Sismológica Córdoba",
+      "nroCertificacionAdquisicion": "CBA-98765"
+    },
+    "empleado": {
+      "apellido": "Rodríguez",
+      "mail": "jrodriguez@example.com",
+      "nombre": "Juan",
+      "telefono": "11-7654321"
+    },
+    "estado": {
+      "ambito": "General",
+      "nombreEstado": "Cerrado"
+    }
+  },
+  {
+    "fechaHoraCierre": "2025-05-24T18:00:00",
+    "fechaHoraFinalizacion": "2025-05-24T17:30:00",
+    "fechaHoraInicio": "2025-05-24T09:00:00",
+    "numeroOrden": 6,
+    "observacionCierre": "Pendiente de revisión.",
+    "estacionSismologica": {
+      "codigoEstacion": "EST-MZA-003",
+      "documentoCertificacionAdq": "DOC-MZA-2025",
+      "fechaSolicitudCertificacion": "2025-04-15T00:00:00",
+      "latitud": -32.8908,
+      "longitud": -68.8272,
+      "nombre": "Estación Sismológica Mendoza",
+      "nroCertificacionAdquisicion": "MZA-54321"
+    },
+    "empleado": {
+      "apellido": "Gomez",
+      "mail": "tomi@gmail.com",
+      "nombre": "Tomas",
+      "telefono": "3518319242",
+      "rol": {
+        "nombre": "Responsable Inscripcion",
+        "descripcion": "Encargado de inscribir"
+      }
+    },
+    "usuario": {
+      "nombreUsuario": "Tomas",
+      "contrasenia": "abc123",
+      "empleado": {
+        "apellido": "Gomez",
+        "mail": "tomi@gmail.com",
+        "nombre": "Tomas",
+        "telefono": "3518319242",
+        "rol": {
+          "nombre": "Responsable Inscripcion",
+          "descripcion": "Encargado de inscribir"
+        }
+      }
+    },
+    "sesionActual": {
+      "fechaInicio": "2025-05-23T12:30:00.123456789",
+      "activo": true
+    },
+    "estado": {
+      "ambito": "OrdenInspeccion",
+      "nombreEstado": "CompletaRealizada"
+    }
+  }
+]
