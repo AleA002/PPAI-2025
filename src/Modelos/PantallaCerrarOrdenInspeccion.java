@@ -1,17 +1,22 @@
 package Modelos;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PantallaCerrarOrdenInspeccion {
     private JPanel panelContenedor;
     private GestorCerrarOrdenInspeccion gestor;
     private JFrame ventana;
+    private List<OrdenInspeccion> ordenesVisibles;
+    private JTable tablaOrdenes;
     private DefaultListModel<String> listModel;
     private JList<String> listaVisual;
-
+    private JTextArea campoObservacion;
+    private JButton botonConfirmar;
     public PantallaCerrarOrdenInspeccion(String rutaJson) {
         this.gestor = new GestorCerrarOrdenInspeccion(this, rutaJson);
     }
@@ -38,64 +43,217 @@ public class PantallaCerrarOrdenInspeccion {
     public void mostrarOrdenesInspeccionCompletaRealizada(List<OrdenInspeccion> listaOrdenesInspeccionCompletaRealizada, JPanel panelContenedor) {
         panelContenedor.removeAll();
 
-        DefaultListModel<String> listModel = new DefaultListModel<>();
+        ordenesVisibles = new ArrayList<>();
+        List<Object[]> datosTabla = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
         for (OrdenInspeccion o : listaOrdenesInspeccionCompletaRealizada) {
             if (o.getEstado().getNombreEstado().equals("CompletaRealizada")) {
-                StringBuilder sb = new StringBuilder();
-                sb.append("{\n");
-                sb.append("  \"nroOrden\": ").append(o.getNroOrden()).append(",\n");
-                sb.append("  \"fechaHoraInicio\": \"").append(o.getFechaHoraInicio().format(formatter)).append("\",\n");
-                sb.append("  \"fechaHoraFinalizacion\": \"").append(o.getFechaHoraFinalizacion().format(formatter)).append("\",\n");
-                sb.append("  \"fechaHoraCierre\": \"").append(o.getFechaHoraCierre().format(formatter)).append("\",\n");
-                sb.append("  \"observacionCierre\": \"").append(o.getObservacionCierre()).append("\",\n");
-                sb.append("  \"estado\": \"").append(o.getEstado().getNombreEstado()).append("\",\n");
-                EstacionSismologica est = o.getEstacionSismologica();
-                sb.append("  \"estacionSismologica\": {\n");
-                sb.append("    \"codigoEstacion\": \"").append(est.getCodigoEstacion()).append("\",\n");
-                sb.append("    \"documentoCertificacionAdj\": \"").append(est.getDocumentoCertificacionAdq()).append("\",\n");
-                sb.append("    \"fechaSolicitudCertificacion\": \"").append(est.getFechaSolicitudCertificacion()).append("\",\n");
-                sb.append("    \"latitud\": ").append(est.getLatitud()).append(",\n");
-                sb.append("    \"longitud\": ").append(est.getLongitud()).append(",\n");
-                sb.append("    \"nombre\": \"").append(est.getNombre()).append("\",\n");
-                sb.append("    \"nroCertificacionAdquisicion\": \"").append(est.getNroCertificacionAdquisicion()).append("\"\n");
-                sb.append("  },\n");
-
-                sb.append("  \"empleado\": \"").append(o.getEmpleado().getNombre()).append(" ").append(o.getEmpleado().getApellido()).append("\"\n");
-                sb.append("}");
-
-                listModel.addElement(sb.toString());
+                ordenesVisibles.add(o);
+                datosTabla.add(new Object[]{
+                        o.getNroOrden(),
+                        o.getFechaHoraInicio().format(formatter),
+                        o.getFechaHoraFinalizacion().format(formatter),
+                        o.getFechaHoraCierre().format(formatter),
+                        o.getObservacionCierre(),
+                        o.getEstado().getNombreEstado(),
+                        o.getEstacionSismologica().getCodigoEstacion(),
+                        o.getEmpleado().getNombre() + " " + o.getEmpleado().getApellido()
+                });
             }
         }
 
-        JList<String> lista = new JList<>(listModel);
-        lista.setCellRenderer((list, value, index, isSelected, cellHasFocus) -> {
-            JTextArea textArea = new JTextArea(value);
-            textArea.setLineWrap(true);
-            textArea.setWrapStyleWord(true);
-            textArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
-            textArea.setOpaque(true);
-            textArea.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-            textArea.setEditable(false);
+        String[] columnas = {
+                "Nro Orden", "Inicio", "Fin", "Cierre", "Observación Cierre",
+                "Estado", "Código Estación", "Empleado"
+        };
 
-            if (isSelected) {
-                textArea.setBackground(list.getSelectionBackground());
-                textArea.setForeground(list.getSelectionForeground());
-            } else {
-                textArea.setBackground(list.getBackground());
-                textArea.setForeground(list.getForeground());
+        Object[][] datos = datosTabla.toArray(new Object[0][]);
+
+        tablaOrdenes = new JTable(new DefaultTableModel(datos, columnas) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 4;
             }
 
-            return textArea;
+            @Override
+            public void setValueAt(Object value, int row, int column) {
+                super.setValueAt(value, row, column);
+                if (column == 4) {
+                    ordenesVisibles.get(row).setObservacionCierre(value.toString());
+                }
+            }
         });
 
-        JScrollPane scrollPane = new JScrollPane(lista);
+        tablaOrdenes.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        tablaOrdenes.setRowHeight(28);
+
+        JScrollPane scrollPane = new JScrollPane(tablaOrdenes);
         scrollPane.setPreferredSize(new Dimension(780, 500));
+
+        JButton botonSeleccionar = new JButton("Seleccionar Orden de Inspección");
+        botonSeleccionar.addActionListener(e -> pedirSeleccionOrdenInspeccion());
+
+        JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panelInferior.add(botonSeleccionar);
 
         panelContenedor.setLayout(new BorderLayout());
         panelContenedor.add(scrollPane, BorderLayout.CENTER);
+        panelContenedor.add(panelInferior, BorderLayout.SOUTH);
         panelContenedor.revalidate();
         panelContenedor.repaint();
     }
+
+    public void pedirSeleccionOrdenInspeccion() {
+        int filaSeleccionada = tablaOrdenes.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(ventana, "Por favor, seleccione una orden de inspección.", "Atención", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        tomarSeleccionOrdenInspeccion(filaSeleccionada);
+    }
+
+    public void tomarSeleccionOrdenInspeccion(int fila) {
+        OrdenInspeccion ordenSeleccionada = ordenesVisibles.get(fila);
+        // Acá hacé lo que necesites con la orden seleccionada
+        JOptionPane.showMessageDialog(ventana, "Orden seleccionada:\nNro: " + ordenSeleccionada.getNroOrden(), "Orden Seleccionada", JOptionPane.INFORMATION_MESSAGE);
+
+        gestor.tomarSeleccionOrdenInspeccion(ordenSeleccionada);
+        pedirIngresarObservacionCierre();
+    }
+
+    public void pedirIngresarObservacionCierre() {
+        panelContenedor.removeAll();
+
+        JLabel label = new JLabel("Ingrese la observación de cierre para la Orden");
+        label.setFont(new Font("Monospaced", Font.BOLD, 14));
+
+        campoObservacion = new JTextArea(5, 40);
+        campoObservacion.setLineWrap(true);
+        campoObservacion.setWrapStyleWord(true);
+        JScrollPane scroll = new JScrollPane(campoObservacion);
+
+        botonConfirmar = new JButton("Confirmar Observación");
+        botonConfirmar.addActionListener(e -> tomarObservacionCierre());
+
+        JPanel panelForm = new JPanel();
+        panelForm.setLayout(new BoxLayout(panelForm, BoxLayout.Y_AXIS));
+        panelForm.add(label);
+        panelForm.add(Box.createVerticalStrut(10));
+        panelForm.add(scroll);
+        panelForm.add(Box.createVerticalStrut(20));
+        panelForm.add(botonConfirmar);
+
+        panelContenedor.add(panelForm, BorderLayout.CENTER);
+        panelContenedor.revalidate();
+        panelContenedor.repaint();
+    }
+
+    public void tomarObservacionCierre() {
+        String textoObservacion = campoObservacion.getText().trim();
+
+        if (textoObservacion.isEmpty()) {
+            JOptionPane.showMessageDialog(ventana, "La observación no puede estar vacía.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        gestor.tomarObservacionCierre(textoObservacion);
+
+        JOptionPane.showMessageDialog(ventana, "Observación guardada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+        mostrarMotivosFueraServicio();
+    }
+
+    public void mostrarMotivosFueraServicio() {
+        List<String> listaMotivos = gestor.habilitarActualizarSituacionSismografo();
+
+        panelContenedor.removeAll();
+
+        JLabel label = new JLabel("Seleccione los motivos de fuera de servicio:");
+        label.setFont(new Font("Monospaced", Font.BOLD, 14));
+
+        // Armar los datos para la tabla
+        String[] columnNames = { "Motivo", "Seleccionado", "Comentario" };
+        Object[][] data = new Object[listaMotivos.size()][3];
+        for (int i = 0; i < listaMotivos.size(); i++) {
+            data[i][0] = listaMotivos.get(i);  // motivo
+            data[i][1] = false;                // seleccionado
+            data[i][2] = "";                   // comentario
+        }
+
+        DefaultTableModel tableModel = new DefaultTableModel(data, columnNames) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column != 0; // Sólo permiten editar checkbox y comentario
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return switch (columnIndex) {
+                    case 1 -> Boolean.class;
+                    default -> String.class;
+                };
+            }
+        };
+
+        JTable tablaMotivos = new JTable(tableModel);
+        JScrollPane scroll = new JScrollPane(tablaMotivos);
+
+        JButton botonConfirmarMotivo = new JButton("Confirmar motivo");
+        botonConfirmarMotivo.addActionListener(e -> {
+            List<String> motivosSeleccionados = new ArrayList<>();
+            List<String> comentarios = new ArrayList<>();
+
+            for (int i = 0; i < tableModel.getRowCount(); i++) {
+                Boolean seleccionado = (Boolean) tableModel.getValueAt(i, 1);
+                if (seleccionado != null && seleccionado) {
+                    String motivo = (String) tableModel.getValueAt(i, 0);
+                    String comentario = (String) tableModel.getValueAt(i, 2);
+
+                    if (comentario.trim().isEmpty()) {
+                        JOptionPane.showMessageDialog(ventana,
+                                "Debe ingresar un comentario para el motivo: " + motivo,
+                                "Comentario requerido",
+                                JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
+
+                    motivosSeleccionados.add(motivo);
+                    comentarios.add(comentario);
+                }
+            }
+
+            if (motivosSeleccionados.isEmpty()) {
+                JOptionPane.showMessageDialog(ventana, "Debe seleccionar al menos un motivo.", "Atención", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            pedirSeleccionarMotivosFueraServicio(motivosSeleccionados, comentarios);
+        });
+
+        JPanel panelForm = new JPanel();
+        panelForm.setLayout(new BoxLayout(panelForm, BoxLayout.Y_AXIS));
+        panelForm.add(label);
+        panelForm.add(Box.createVerticalStrut(10));
+        panelForm.add(scroll);
+        panelForm.add(Box.createVerticalStrut(20));
+        panelForm.add(botonConfirmarMotivo);
+
+        panelContenedor.add(panelForm, BorderLayout.CENTER);
+        panelContenedor.revalidate();
+        panelContenedor.repaint();
+    }
+
+
+    public void pedirSeleccionarMotivosFueraServicio(List<String> motivos, List<String> comentarios) {
+        for (int i = 0; i < motivos.size(); i++) {
+            System.out.println("Motivo: " + motivos.get(i));
+            System.out.println("Comentario: " + comentarios.get(i));
+        }
+
+        // Acá hacés lo que tu secuencia UML pide: enviar, guardar, despachar, etc.
+    }
+
+
 }

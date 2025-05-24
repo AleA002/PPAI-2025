@@ -28,6 +28,9 @@ public class GestorCerrarOrdenInspeccion {
     private List<OrdenInspeccion> listaOrdenesInspeccion;
     private List<OrdenInspeccion> listaOrdenesInspeccionEmpleado;
     private List<OrdenInspeccion> listaOrdenesInspeccionCompletaRealizada;
+    private OrdenInspeccion seleccionada;
+    private String observacionCierre;
+    private List<String> listaTiposMotivos;
 
     // constructor
     public GestorCerrarOrdenInspeccion(PantallaCerrarOrdenInspeccion pantallaCerrarOrdenInspeccion, String rutaJson) {
@@ -37,6 +40,9 @@ public class GestorCerrarOrdenInspeccion {
         this.listaOrdenesInspeccion = new ArrayList<>();
         this.listaOrdenesInspeccionEmpleado = new ArrayList<>();
         this.listaOrdenesInspeccionCompletaRealizada = new ArrayList<>();
+
+        this.seleccionada = null;
+        this.listaTiposMotivos = new ArrayList<>();
 
         // Cargar desde JSON con Gson
         try {
@@ -98,6 +104,26 @@ public class GestorCerrarOrdenInspeccion {
         return listaOrdenesInspeccionCompletaRealizada;
     }
 
+    public void tomarSeleccionOrdenInspeccion(OrdenInspeccion ordenSeleccionada) {
+        System.out.println("Orden seleccionada por el usuario: " + ordenSeleccionada.getNroOrden());
+        seleccionada = ordenSeleccionada;
+    }
 
+    public void tomarObservacionCierre(String textoObservacion) {
+        System.out.println("Observacion de Cierre: " + textoObservacion);
+        observacionCierre = textoObservacion;
+    }
+
+    public List<String> habilitarActualizarSituacionSismografo() {
+        buscarTiposMotivosFueraServicio(listaTiposMotivos);
+        return listaTiposMotivos;
+    }
+
+    public void buscarTiposMotivosFueraServicio(List<String> listaTiposMotivos) {
+        List<MotivoTipo> listaMotivos = MotivoTipo.getMotivosTipo();
+        for (MotivoTipo motivo : listaMotivos) {
+            listaTiposMotivos.add(motivo.getDescripcion());
+        }
+    }
 }
 

@@ -18,7 +18,6 @@ public class OrdenInspeccion {
     private List<CambioEstado> historialEstados = new ArrayList<>();
     private Empleado empleado;
 
-    public OrdenInspeccion() { }
 
     // constructor
     public OrdenInspeccion(int nroOrden, Sismografo sismografo, Empleado empleado) {
@@ -66,13 +65,51 @@ public class OrdenInspeccion {
         return empleado;
     }
 
+
+    //setters
+    public void setNroOrden(int nroOrden) {
+        this.nroOrden = nroOrden;
+    }
+    public void setFechaHoraInicio(LocalDateTime fechaHoraInicio) {
+        this.fechaHoraInicio = fechaHoraInicio;
+    }
+    public void setFechaHoraFinalizacion(LocalDateTime fechaHoraFinalizacion) {
+        this.fechaHoraFinalizacion = fechaHoraFinalizacion;
+    }
+    public void setFechaHoraCierre(LocalDateTime fechaHoraCierre) {
+        this.fechaHoraCierre = fechaHoraCierre;
+    }
+    public void setObservacionCierre(String observacionCierre) {
+        this.observacionCierre = observacionCierre;
+    }
+    public void setMotivoFueraDeServicio(MotivoFueraDeServicio motivoFueraDeServicio) {
+        this.motivoFueraDeServicio = motivoFueraDeServicio;
+    }
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+    public void setSismografo(Sismografo sismografo) {
+        this.sismografo = sismografo;
+    }
+    public void setEstacionSismologica(EstacionSismologica estacionSismologica) {
+        this.estacionSismologica = estacionSismologica;
+    }
+    public void setHistorialEstados(List<CambioEstado> historialEstados) {
+        this.historialEstados = historialEstados;
+    }
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
+
+
+
+    //metodos
     public boolean esResponsable(Empleado empleadoComparar) {
         if (empleadoComparar.getApellido().equals(empleado.getApellido())) {
             return true;
         }
         return false;
     }
-
 
 
     //to String
