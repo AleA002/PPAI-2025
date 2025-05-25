@@ -36,11 +36,10 @@ public class PantallaCerrarOrdenInspeccion {
 
     public void tomarOpcionCerrarOrdenDeInspeccion() {
         habilitarPantalla();
-        List <OrdenInspeccion> listaOrdenesInspeccionCompletaRealizada = gestor.opcionCerrarOrdenDeInspeccion();
-        mostrarOrdenesInspeccionCompletaRealizada(listaOrdenesInspeccionCompletaRealizada, panelContenedor);
+        gestor.opcionCerrarOrdenDeInspeccion();
     }
 
-    public void mostrarOrdenesInspeccionCompletaRealizada(List<OrdenInspeccion> listaOrdenesInspeccionCompletaRealizada, JPanel panelContenedor) {
+    public void mostrarOrdenesInspeccionCompletaRealizada(List<OrdenInspeccion> listaOrdenesInspeccionCompletaRealizada) {
         panelContenedor.removeAll();
 
         ordenesVisibles = new ArrayList<>();
@@ -120,7 +119,7 @@ public class PantallaCerrarOrdenInspeccion {
         JOptionPane.showMessageDialog(ventana, "Orden seleccionada:\nNro: " + ordenSeleccionada.getNroOrden(), "Orden Seleccionada", JOptionPane.INFORMATION_MESSAGE);
 
         gestor.tomarSeleccionOrdenInspeccion(ordenSeleccionada);
-        pedirIngresarObservacionCierre();
+
     }
 
     public void pedirIngresarObservacionCierre() {
@@ -162,30 +161,27 @@ public class PantallaCerrarOrdenInspeccion {
 
         JOptionPane.showMessageDialog(ventana, "Observación guardada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-        mostrarMotivosFueraServicio();
+
     }
 
-    public void mostrarMotivosFueraServicio() {
-        List<String> listaMotivos = gestor.habilitarActualizarSituacionSismografo();
-
+    public void mostrarMotivosFueraServicio(List<String> listaMotivos) {
         panelContenedor.removeAll();
 
         JLabel label = new JLabel("Seleccione los motivos de fuera de servicio:");
         label.setFont(new Font("Monospaced", Font.BOLD, 14));
 
-        // Armar los datos para la tabla
         String[] columnNames = { "Motivo", "Seleccionado", "Comentario" };
         Object[][] data = new Object[listaMotivos.size()][3];
         for (int i = 0; i < listaMotivos.size(); i++) {
-            data[i][0] = listaMotivos.get(i);  // motivo
-            data[i][1] = false;                // seleccionado
-            data[i][2] = "";                   // comentario
+            data[i][0] = listaMotivos.get(i);
+            data[i][1] = false;
+            data[i][2] = "";
         }
 
         DefaultTableModel tableModel = new DefaultTableModel(data, columnNames) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return column != 0; // Sólo permiten editar checkbox y comentario
+                return column != 0;
             }
 
             @Override
@@ -202,34 +198,7 @@ public class PantallaCerrarOrdenInspeccion {
 
         JButton botonConfirmarMotivo = new JButton("Confirmar motivo");
         botonConfirmarMotivo.addActionListener(e -> {
-            List<String> motivosSeleccionados = new ArrayList<>();
-            List<String> comentarios = new ArrayList<>();
-
-            for (int i = 0; i < tableModel.getRowCount(); i++) {
-                Boolean seleccionado = (Boolean) tableModel.getValueAt(i, 1);
-                if (seleccionado != null && seleccionado) {
-                    String motivo = (String) tableModel.getValueAt(i, 0);
-                    String comentario = (String) tableModel.getValueAt(i, 2);
-
-                    if (comentario.trim().isEmpty()) {
-                        JOptionPane.showMessageDialog(ventana,
-                                "Debe ingresar un comentario para el motivo: " + motivo,
-                                "Comentario requerido",
-                                JOptionPane.WARNING_MESSAGE);
-                        return;
-                    }
-
-                    motivosSeleccionados.add(motivo);
-                    comentarios.add(comentario);
-                }
-            }
-
-            if (motivosSeleccionados.isEmpty()) {
-                JOptionPane.showMessageDialog(ventana, "Debe seleccionar al menos un motivo.", "Atención", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            pedirSeleccionarMotivosFueraServicio(motivosSeleccionados, comentarios);
+            pedirSeleccionarMotivosFueraServicio(tableModel);
         });
 
         JPanel panelForm = new JPanel();
@@ -246,14 +215,71 @@ public class PantallaCerrarOrdenInspeccion {
     }
 
 
-    public void pedirSeleccionarMotivosFueraServicio(List<String> motivos, List<String> comentarios) {
-        for (int i = 0; i < motivos.size(); i++) {
-            System.out.println("Motivo: " + motivos.get(i));
-            System.out.println("Comentario: " + comentarios.get(i));
+    private void pedirSeleccionarMotivosFueraServicio(DefaultTableModel tableModel) {
+        List<String> motivosSeleccionados = new ArrayList<>();
+        List<String> comentarios = new ArrayList<>();
+
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            tomarSeleccionMotivoComentario(i, tableModel, motivosSeleccionados, comentarios);
         }
 
-        // Acá hacés lo que tu secuencia UML pide: enviar, guardar, despachar, etc.
+        if (motivosSeleccionados.isEmpty()) {
+            JOptionPane.showMessageDialog(ventana,
+                    "Debe seleccionar al menos un motivo.",
+                    "Atención",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // este ciclo es solo para probar - BORRARLO DESPUES!!!!!!
+        for (int j = 0; j < motivosSeleccionados.size(); j++) {
+            System.out.println("Motivo: " + motivosSeleccionados.get(j));
+            System.out.println("Comentario: " + comentarios.get(j));
+        }
+
+        // Acá podrías seguir con la lógica de guardado o procesamiento
     }
 
+    public void tomarSeleccionMotivoComentario(int i, DefaultTableModel tableModel, List<String> motivosSeleccionados, List<String> comentarios) {
+        Boolean seleccionado = (Boolean) tableModel.getValueAt(i, 1);
+        if (seleccionado != null && seleccionado) {
+            String motivo = (String) tableModel.getValueAt(i, 0);
+            String comentario = (String) tableModel.getValueAt(i, 2);
+
+        if (comentario.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(ventana,
+                    "Debe ingresar un comentario para el motivo: " + motivo,
+                    "Comentario requerido",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+
+        motivosSeleccionados.add(motivo);
+        comentarios.add(comentario);
+
+        gestor.tomarSeleccionMotivoComentario(motivosSeleccionados, comentarios);
+        }
+    }
+
+    public void pedirConfirmacionCierreOrdenInspeccion() {
+        int opcion = JOptionPane.showOptionDialog(
+                ventana, // o null si no tenés un JFrame específico
+                "¿Confirmar Cierre de Orden de Inspección?",
+                "Confirmación",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                new Object[] { "SI", "NO" },
+                "NO"
+        );
+        tomarConfirmacionCierreOrdenInspeccion(opcion);
+
+    }
+
+    public void tomarConfirmacionCierreOrdenInspeccion(int opcion) {
+        if (opcion == JOptionPane.NO_OPTION || opcion == JOptionPane.CLOSED_OPTION) {
+            System.exit(0); // Finaliza el programa
+        }
+        gestor.tomarConfirmacionCierreOrdenInspeccion(); //Continua la ejecucion
+    }
 
 }

@@ -21,7 +21,7 @@
       "telefono": "351-1234567"
     },
     "estado": {
-      "ambito": "General",
+      "ambito": "OrdenInspeccion",
       "nombreEstado": "Pendiente"
     }
   },
@@ -47,7 +47,7 @@
       "telefono": "11-7654321"
     },
     "estado": {
-      "ambito": "General",
+      "ambito": "OrdenInspeccion",
       "nombreEstado": "Cerrado"
     }
   },
@@ -73,7 +73,7 @@
       "telefono": "261-3344556"
     },
     "estado": {
-      "ambito": "General",
+      "ambito": "OrdenInspeccion",
       "nombreEstado": "En progreso"
     }
   },
@@ -99,7 +99,7 @@
       "telefono": "351-1234567"
     },
     "estado": {
-      "ambito": "General",
+      "ambito": "OrdenInspeccion",
       "nombreEstado": "Pendiente"
     }
   },
@@ -125,7 +125,7 @@
       "telefono": "11-7654321"
     },
     "estado": {
-      "ambito": "General",
+      "ambito": "OrdenInspeccion",
       "nombreEstado": "Cerrado"
     }
   },

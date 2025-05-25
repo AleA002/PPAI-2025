@@ -11,6 +11,7 @@ import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 
@@ -18,31 +19,40 @@ import java.util.List;
 public class GestorCerrarOrdenInspeccion {
 
     // atributos
-    private PantallaCerrarOrdenInspeccion pantallaCerrarOrdenInspeccion;
+    private PantallaCerrarOrdenInspeccion pantalla;
     private LocalDateTime fechaActual;
     private Sesion sesionActual;
     private Usuario usuarioActualSesion;
     private MotivoFueraDeServicio motivoSeleccionado;
     private String comentario;
     private Empleado empleadoActual;
+
     private List<OrdenInspeccion> listaOrdenesInspeccion;
     private List<OrdenInspeccion> listaOrdenesInspeccionEmpleado;
     private List<OrdenInspeccion> listaOrdenesInspeccionCompletaRealizada;
-    private OrdenInspeccion seleccionada;
+    private List<OrdenInspeccion> listaOrdenesInspeccionOrdenadas;
+    private OrdenInspeccion seleccionadaOrden;
     private String observacionCierre;
     private List<String> listaTiposMotivos;
+    private List<String> listaMotivosSeleccionados;
+    private List<String> listaComentarios;
 
     // constructor
     public GestorCerrarOrdenInspeccion(PantallaCerrarOrdenInspeccion pantallaCerrarOrdenInspeccion, String rutaJson) {
-        this.fechaActual = LocalDateTime.now();
-        this.pantallaCerrarOrdenInspeccion = pantallaCerrarOrdenInspeccion;
+        this.fechaActual = null;
+        this.pantalla = pantallaCerrarOrdenInspeccion;
 
         this.listaOrdenesInspeccion = new ArrayList<>();
         this.listaOrdenesInspeccionEmpleado = new ArrayList<>();
         this.listaOrdenesInspeccionCompletaRealizada = new ArrayList<>();
+        this.listaOrdenesInspeccionOrdenadas = new ArrayList<>();
 
-        this.seleccionada = null;
+        this.seleccionadaOrden = null;
+        this.observacionCierre = null;
         this.listaTiposMotivos = new ArrayList<>();
+
+        this.listaMotivosSeleccionados = new ArrayList<>();
+        this.listaComentarios = new ArrayList<>();
 
         // Cargar desde JSON con Gson
         try {
@@ -71,12 +81,12 @@ public class GestorCerrarOrdenInspeccion {
     }
 
     //metodos
-    public List<OrdenInspeccion> opcionCerrarOrdenDeInspeccion() {
+    public void opcionCerrarOrdenDeInspeccion() {
         empleadoActual = buscarEmpleado(sesionActual);
 
         buscarOrdenInspeccionRI(empleadoActual, listaOrdenesInspeccion);
-
-        return ordenarOrdenInspeccionXFechaFinalizacion(listaOrdenesInspeccionCompletaRealizada);
+        listaOrdenesInspeccionOrdenadas = ordenarOrdenInspeccionXFechaFinalizacion(listaOrdenesInspeccionCompletaRealizada);
+        pantalla.mostrarOrdenesInspeccionCompletaRealizada(listaOrdenesInspeccionOrdenadas);
     }
 
     public Empleado buscarEmpleado(Sesion sesionActual) {
@@ -106,17 +116,19 @@ public class GestorCerrarOrdenInspeccion {
 
     public void tomarSeleccionOrdenInspeccion(OrdenInspeccion ordenSeleccionada) {
         System.out.println("Orden seleccionada por el usuario: " + ordenSeleccionada.getNroOrden());
-        seleccionada = ordenSeleccionada;
+        seleccionadaOrden = ordenSeleccionada;
+        pantalla.pedirIngresarObservacionCierre();
     }
 
     public void tomarObservacionCierre(String textoObservacion) {
         System.out.println("Observacion de Cierre: " + textoObservacion);
         observacionCierre = textoObservacion;
+        habilitarActualizarSituacionSismografo();
     }
 
-    public List<String> habilitarActualizarSituacionSismografo() {
+    public void habilitarActualizarSituacionSismografo() {
         buscarTiposMotivosFueraServicio(listaTiposMotivos);
-        return listaTiposMotivos;
+        pantalla.mostrarMotivosFueraServicio(listaTiposMotivos);
     }
 
     public void buscarTiposMotivosFueraServicio(List<String> listaTiposMotivos) {
@@ -124,6 +136,45 @@ public class GestorCerrarOrdenInspeccion {
         for (MotivoTipo motivo : listaMotivos) {
             listaTiposMotivos.add(motivo.getDescripcion());
         }
+    }
+
+    public void tomarSeleccionMotivoComentario(List<String> motivosSeleccionados, List<String> comentarios) {
+        listaMotivosSeleccionados = motivosSeleccionados;
+        listaComentarios = comentarios;
+
+        pantalla.pedirConfirmacionCierreOrdenInspeccion();
+    }
+
+    public void tomarConfirmacionCierreOrdenInspeccion() {
+        validarObservacionCierreOrdenExistente();
+        validarMotivoSeleccionado(listaMotivosSeleccionados);
+    }
+
+    private void validarObservacionCierreOrdenExistente() {
+        if (observacionCierre == null) {
+            System.out.println("No existe Observacion de Cierre de Orden");
+            System.exit(0);
+        }
+    }
+
+    private void validarMotivoSeleccionado(List<String> listaMotivosSeleccionados) {
+        if (listaMotivosSeleccionados.size() < 1) {
+            System.out.println("No existe MotivosSeleccionados");
+            System.exit(0);
+        }
+        
+        actualizarOrdenACerrada();
+    }
+
+    private void actualizarOrdenACerrada() {
+        fechaActual = getFechaActual();
+        System.out.println(fechaActual);
+        seleccionadaOrden.setFechaHoraCierre(fechaActual);
+
+    }
+
+    public LocalDateTime getFechaActual() {
+        return fechaActual.now();
     }
 }
 
