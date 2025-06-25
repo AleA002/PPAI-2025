@@ -11,9 +11,11 @@ import java.util.List;
 
 public class main {
     public static void main(String[] args) {
-        System.out.println("Ruta actual de ejecución: " + new java.io.File(".").getAbsolutePath());
         PantallaCerrarOrdenInspeccion pantalla = new PantallaCerrarOrdenInspeccion("src/ordenesInspeccion.json");
-        GestorCerrarOrdenInspeccion gestor = new GestorCerrarOrdenInspeccion(pantalla, "src/ordenesInspeccion.json");
+        InterfazMail interfazMail = new InterfazMail();
+        InterfazMonitorCCRS interfazMonitorCCRS = new InterfazMonitorCCRS();
+        GestorCerrarOrdenInspeccion gestor = new GestorCerrarOrdenInspeccion(pantalla, new InterfazMail(), new InterfazMonitorCCRS(),"src/ordenesInspeccion.json");
+
 
         // Crear y configurar la ventana principal
         JFrame frame = new JFrame("Ventana Principal");
@@ -29,5 +31,6 @@ public class main {
 
         frame.getContentPane().add(boton);
         frame.setVisible(true);
+
     }
 }

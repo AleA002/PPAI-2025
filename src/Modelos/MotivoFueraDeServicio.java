@@ -12,4 +12,15 @@ public class MotivoFueraDeServicio {
         this.comentario = comentario;
     }
 
+    public static MotivoFueraDeServicio parse(MotivoTipo motivoTipo, String comentario) {
+        return new MotivoFueraDeServicio(motivoTipo, comentario);
+    }
+
+    @Override
+    public String toString() {
+        return "MotivoFueraDeServicio{" +
+                "comentario='" + comentario + '\'' +
+                ", motivoTipo=" + motivoTipo +
+                '}';
+    }
 }

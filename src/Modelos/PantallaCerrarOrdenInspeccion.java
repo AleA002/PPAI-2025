@@ -17,8 +17,10 @@ public class PantallaCerrarOrdenInspeccion {
     private JList<String> listaVisual;
     private JTextArea campoObservacion;
     private JButton botonConfirmar;
+    private InterfazMail interfazMail;
+    private InterfazMonitorCCRS interfazMonitorCCRS;
     public PantallaCerrarOrdenInspeccion(String rutaJson) {
-        this.gestor = new GestorCerrarOrdenInspeccion(this, rutaJson);
+        this.gestor = new GestorCerrarOrdenInspeccion(this, interfazMail, interfazMonitorCCRS, rutaJson);
     }
 
     public void habilitarPantalla() {
@@ -51,20 +53,15 @@ public class PantallaCerrarOrdenInspeccion {
                 ordenesVisibles.add(o);
                 datosTabla.add(new Object[]{
                         o.getNroOrden(),
-                        o.getFechaHoraInicio().format(formatter),
                         o.getFechaHoraFinalizacion().format(formatter),
-                        o.getFechaHoraCierre().format(formatter),
-                        o.getObservacionCierre(),
-                        o.getEstado().getNombreEstado(),
                         o.getEstacionSismologica().getCodigoEstacion(),
-                        o.getEmpleado().getNombre() + " " + o.getEmpleado().getApellido()
+                        o.getSismografo().getIdSismografo()
                 });
             }
         }
 
         String[] columnas = {
-                "Nro Orden", "Inicio", "Fin", "Cierre", "Observación Cierre",
-                "Estado", "Código Estación", "Empleado"
+                "Nro Orden", "Fin", "Código Estación", "ID Sismografo"
         };
 
         Object[][] datos = datosTabla.toArray(new Object[0][]);
@@ -233,11 +230,10 @@ public class PantallaCerrarOrdenInspeccion {
 
         // este ciclo es solo para probar - BORRARLO DESPUES!!!!!!
         for (int j = 0; j < motivosSeleccionados.size(); j++) {
-            System.out.println("Motivo: " + motivosSeleccionados.get(j));
-            System.out.println("Comentario: " + comentarios.get(j));
+            //System.out.println("Motivo: " + motivosSeleccionados.get(j));
+            //System.out.println("Comentario: " + comentarios.get(j));
         }
 
-        // Acá podrías seguir con la lógica de guardado o procesamiento
     }
 
     public void tomarSeleccionMotivoComentario(int i, DefaultTableModel tableModel, List<String> motivosSeleccionados, List<String> comentarios) {

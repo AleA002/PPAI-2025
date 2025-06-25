@@ -1,5 +1,8 @@
 package Modelos;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class Empleado {
     //atributos
     private String mail;
@@ -34,10 +37,29 @@ public class Empleado {
         return rol;
     }
 
+    // metodos
 
+    public static List<Empleado> getEmpleados() {
+        List<Empleado> listaEmpleados = new ArrayList<>();
+
+        Rol rolEmpleado = new Rol("Empleado", "Empleado Random"); // rol genérico
+        Rol rolResponsableInscripcion = new Rol("Responsable Inscripcion", "Es el responsable de Inscribir");
+        Rol rolResponsableReparacion = new Rol("Responsable Reparacion", "Es el responsable de Reparar");
+
+        listaEmpleados.add(new Empleado("mgonzalez@example.com", "González", "María", "351-1234567", rolResponsableReparacion));
+        listaEmpleados.add(new Empleado("jrodriguez@example.com", "Rodríguez", "Juan", "11-7654321", rolResponsableReparacion));
+        listaEmpleados.add(new Empleado("cfernandez@example.com", "Fernández", "Carla", "261-3344556", rolEmpleado));
+        listaEmpleados.add(new Empleado("tomi@gmail.com", "Gomez", "Tomas", "3518319242", rolResponsableInscripcion));
+        listaEmpleados.add(new Empleado("leomessi@gmail.com", "Messi", "Leo", "118319242", rolResponsableInscripcion));
+
+        return listaEmpleados;
+    }
 
     public boolean esResponsableReparacion() {
-        return rol != null && "ResponsableReparacion".equalsIgnoreCase(rol.getNombreRol());
+        if ((this.getRol().getNombreRol()).equals("Responsable Reparacion")) {
+            return true;
+        }
+        return false;
     }
 
     //to String

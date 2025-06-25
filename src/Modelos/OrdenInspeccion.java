@@ -15,7 +15,6 @@ public class OrdenInspeccion {
     private Estado estado;
     private Sismografo sismografo;
     private EstacionSismologica estacionSismologica;
-    private List<CambioEstado> historialEstados = new ArrayList<>();
     private Empleado empleado;
 
 
@@ -57,9 +56,6 @@ public class OrdenInspeccion {
         return estacionSismologica;
     }
 
-    public List<CambioEstado> getHistorialEstados() {
-        return historialEstados;
-    }
 
     public Empleado getEmpleado() {
         return empleado;
@@ -94,9 +90,6 @@ public class OrdenInspeccion {
     public void setEstacionSismologica(EstacionSismologica estacionSismologica) {
         this.estacionSismologica = estacionSismologica;
     }
-    public void setHistorialEstados(List<CambioEstado> historialEstados) {
-        this.historialEstados = historialEstados;
-    }
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
     }
@@ -111,6 +104,12 @@ public class OrdenInspeccion {
         return false;
     }
 
+    public void cerrarOrden() {
+        Estado estado = new Estado("Cerrado", "OrdenInspeccion");
+        this.setEstado(estado);
+    }
+
+
 
     //to String
     @Override
@@ -124,7 +123,6 @@ public class OrdenInspeccion {
                 ", estado=" + estado +
                 ", sismografo=" + sismografo +
                 ", estacionSismologica=" + estacionSismologica +
-                ", historialEstados=" + historialEstados +
                 ", empleado=" + empleado +
                 '}';
     }

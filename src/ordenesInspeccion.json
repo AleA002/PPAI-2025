@@ -3,7 +3,7 @@
     "fechaHoraCierre": "2025-05-24T10:00:00",
     "fechaHoraFinalizacion": "2025-05-23T18:00:00",
     "fechaHoraInicio": "2025-05-23T08:00:00",
-    "numeroOrden": 1,
+    "nroOrden": 1,
     "observacionCierre": "Revisión finalizada con recomendaciones.",
     "estacionSismologica": {
       "codigoEstacion": "EST-CBA-001",
@@ -29,7 +29,7 @@
     "fechaHoraCierre": "2025-05-22T14:30:00",
     "fechaHoraFinalizacion": "2025-05-21T16:45:00",
     "fechaHoraInicio": "2025-05-21T07:30:00",
-    "numeroOrden": 2,
+    "nroOrden": 2,
     "observacionCierre": "Equipo operativo sin novedades.",
     "estacionSismologica": {
       "codigoEstacion": "EST-BA-002",
@@ -55,7 +55,7 @@
     "fechaHoraCierre": "2025-05-20T12:00:00",
     "fechaHoraFinalizacion": "2025-05-19T15:00:00",
     "fechaHoraInicio": "2025-05-19T09:00:00",
-    "numeroOrden": 3,
+    "nroOrden": 3,
     "observacionCierre": "Falla menor corregida en sensor.",
     "estacionSismologica": {
       "codigoEstacion": "EST-CBA-001",
@@ -81,7 +81,7 @@
     "fechaHoraCierre": "2025-05-18T17:45:00",
     "fechaHoraFinalizacion": "2025-05-17T17:00:00",
     "fechaHoraInicio": "2025-05-17T08:15:00",
-    "numeroOrden": 4,
+    "nroOrden": 4,
     "observacionCierre": "Se cambió módulo de comunicación.",
     "estacionSismologica": {
       "codigoEstacion": "EST-BA-002",
@@ -107,7 +107,7 @@
     "fechaHoraCierre": "2025-05-16T11:20:00",
     "fechaHoraFinalizacion": "2025-05-15T16:10:00",
     "fechaHoraInicio": "2025-05-15T07:45:00",
-    "numeroOrden": 5,
+    "nroOrden": 5,
     "observacionCierre": "Se recalibraron sensores.",
     "estacionSismologica": {
       "codigoEstacion": "EST-CBA-001",
@@ -133,7 +133,7 @@
     "fechaHoraCierre": "2025-05-24T18:00:00",
     "fechaHoraFinalizacion": "2025-05-24T17:30:00",
     "fechaHoraInicio": "2025-05-24T09:00:00",
-    "numeroOrden": 6,
+    "nroOrden": 6,
     "observacionCierre": "Pendiente de revisión.",
     "estacionSismologica": {
       "codigoEstacion": "EST-MZA-003",
@@ -150,8 +150,8 @@
       "nombre": "Tomas",
       "telefono": "3518319242",
       "rol": {
-        "nombre": "Responsable Inscripcion",
-        "descripcion": "Encargado de inscribir"
+        "nombre": "Responsable de Inspeccion",
+        "descripcion": "Encargado de Inspeccionar"
       }
     },
     "usuario": {
@@ -163,13 +163,349 @@
         "nombre": "Tomas",
         "telefono": "3518319242",
         "rol": {
-          "nombre": "Responsable Inscripcion",
-          "descripcion": "Encargado de inscribir"
+          "nombre": "Responsable de Inspeccion",
+          "descripcion": "Encargado de Inspeccionar"
         }
       }
     },
     "sesionActual": {
       "fechaInicio": "2025-05-23T12:30:00.123456789",
+      "activo": true
+    },
+    "estado": {
+      "ambito": "OrdenInspeccion",
+      "nombreEstado": "CompletaRealizada"
+    }
+  },
+  {
+    "fechaHoraCierre": "2025-06-01T17:45:00",
+    "fechaHoraFinalizacion": "2025-06-01T17:15:00",
+    "fechaHoraInicio": "2025-06-01T08:30:00",
+    "nroOrden": 7,
+    "observacionCierre": "Revisión finalizada.",
+    "estacionSismologica": {
+      "codigoEstacion": "EST-BA-002",
+      "documentoCertificacionAdq": "DOC-BSAS-2025",
+      "fechaSolicitudCertificacion": "2025-04-20T00:00:00",
+      "latitud": -34.6037,
+      "longitud": -58.3816,
+      "nombre": "Estación Sismológica Buenos Aires",
+      "nroCertificacionAdquisicion": "BSAS-98765"
+    },
+    "empleado": {
+      "apellido": "Perez",
+      "mail": "maria.perez@gmail.com",
+      "nombre": "Maria",
+      "telefono": "3518321123",
+      "rol": {
+        "nombre": "Inspector",
+        "descripcion": "Realiza inspección"
+      }
+    },
+    "usuario": {
+      "nombreUsuario": "MariaP",
+      "contrasenia": "def456",
+      "empleado": {
+        "apellido": "Perez",
+        "mail": "maria.perez@gmail.com",
+        "nombre": "Maria",
+        "telefono": "3518321123",
+        "rol": {
+          "nombre": "Inspector",
+          "descripcion": "Realiza inspección"
+        }
+      }
+    },
+    "sesionActual": {
+      "fechaInicio": "2025-06-01T08:00:00.987654321",
+      "activo": true
+    },
+    "estado": {
+      "ambito": "OrdenInspeccion",
+      "nombreEstado": "CompletaRealizada"
+    }
+  },
+  {
+    "fechaHoraCierre": "2025-06-20T18:45:00",
+    "fechaHoraFinalizacion": "2025-06-20T18:00:00",
+    "fechaHoraInicio": "2025-06-20T08:45:00",
+    "nroOrden": 8,
+    "observacionCierre": "Requiere seguimiento.",
+    "estacionSismologica": {
+      "codigoEstacion": "EST-CBA-001",
+      "documentoCertificacionAdq": "DOC-CBA-2025",
+      "fechaSolicitudCertificacion": "2025-04-10T00:00:00",
+      "latitud": -31.4167,
+      "longitud": -64.1833,
+      "nombre": "Estación Sismológica Córdoba",
+      "nroCertificacionAdquisicion": "CBA-98765"
+    },
+    "empleado": {
+      "apellido": "Gomez",
+      "mail": "tomi@gmail.com",
+      "nombre": "Tomas",
+      "telefono": "3518319242",
+      "rol": {
+        "nombre": "Responsable de Inspeccion",
+        "descripcion": "Encargado de Inspeccionar"
+      }
+    },
+    "usuario": {
+      "nombreUsuario": "Tomas",
+      "contrasenia": "abc123",
+      "empleado": {
+        "apellido": "Gomez",
+        "mail": "tomi@gmail.com",
+        "nombre": "Tomas",
+        "telefono": "3518319242",
+        "rol": {
+          "nombre": "Responsable de Inspeccion",
+          "descripcion": "Encargado de Inspeccionar"
+        }
+      }
+    },
+    "sesionActual": {
+      "fechaInicio": "2025-06-10T09:30:00.654321987",
+      "activo": true
+    },
+    "estado": {
+      "ambito": "OrdenInspeccion",
+      "nombreEstado": "CompletaRealizada"
+    }
+  },
+  {
+    "fechaHoraCierre": "2025-06-15T18:15:00",
+    "fechaHoraFinalizacion": "2025-06-15T17:45:00",
+    "fechaHoraInicio": "2025-06-15T09:15:00",
+    "nroOrden": 9,
+    "observacionCierre": "Informe enviado al supervisor.",
+    "estacionSismologica": {
+      "codigoEstacion": "EST-CBA-001",
+      "documentoCertificacionAdq": "DOC-CBA-2025",
+      "fechaSolicitudCertificacion": "2025-04-10T00:00:00",
+      "latitud": -31.4167,
+      "longitud": -64.1833,
+      "nombre": "Estación Sismológica Córdoba",
+      "nroCertificacionAdquisicion": "CBA-98765"
+    },
+    "empleado": {
+      "apellido": "Martinez",
+      "mail": "laura.martinez@gmail.com",
+      "nombre": "Laura",
+      "telefono": "3518356789",
+      "rol": {
+        "nombre": "Coordinador",
+        "descripcion": "Coordina inspecciones"
+      }
+    },
+    "usuario": {
+      "nombreUsuario": "LauraM",
+      "contrasenia": "jkl012",
+      "empleado": {
+        "apellido": "Martinez",
+        "mail": "laura.martinez@gmail.com",
+        "nombre": "Laura",
+        "telefono": "3518356789",
+        "rol": {
+          "nombre": "Coordinador",
+          "descripcion": "Coordina inspecciones"
+        }
+      }
+    },
+    "sesionActual": {
+      "fechaInicio": "2025-06-15T08:50:00.789123456",
+      "activo": true
+    },
+    "estado": {
+      "ambito": "OrdenInspeccion",
+      "nombreEstado": "CompletaRealizada"
+    }
+  },
+  {
+    "fechaHoraCierre": "2025-06-10T19:00:00",
+    "fechaHoraFinalizacion": "2025-06-10T18:30:00",
+    "fechaHoraInicio": "2025-06-10T10:00:00",
+    "nroOrden": 10,
+    "observacionCierre": "Pendiente de aprobación.",
+    "estacionSismologica": {
+      "codigoEstacion": "EST-CBA-001",
+      "documentoCertificacionAdq": "DOC-SF-2025",
+      "fechaSolicitudCertificacion": "2025-05-05T00:00:00",
+      "latitud": -31.4167,
+      "longitud": -64.1833,
+      "nombre": "Estación Sismológica Santiago",
+      "nroCertificacionAdquisicion": "SF-33445"
+    },
+    "empleado": {
+      "apellido": "Gomez",
+      "mail": "tomi@gmail.com",
+      "nombre": "Tomas",
+      "telefono": "3518319242",
+      "rol": {
+        "nombre": "Responsable de Inspeccion",
+        "descripcion": "Encargado de Inspeccionar"
+      }
+    },
+    "usuario": {
+      "nombreUsuario": "Tomas",
+      "contrasenia": "abc123",
+      "empleado": {
+        "apellido": "Gomez",
+        "mail": "tomi@gmail.com",
+        "nombre": "Tomas",
+        "telefono": "3518319242",
+        "rol": {
+          "nombre": "Responsable de Inspeccion",
+          "descripcion": "Encargado de Inspeccionar"
+        }
+      }
+    },
+    "sesionActual": {
+      "fechaInicio": "2025-06-20T08:15:00.321654987",
+      "activo": true
+    },
+    "estado": {
+      "ambito": "OrdenInspeccion",
+      "nombreEstado": "CompletaRealizada"
+    }
+  },
+  {
+    "fechaHoraCierre": "2025-06-25T19:10:00",
+    "fechaHoraFinalizacion": "2025-06-25T18:45:00",
+    "fechaHoraInicio": "2025-06-25T09:30:00",
+    "nroOrden": 11,
+    "observacionCierre": "Inspección con observaciones.",
+    "estacionSismologica": {
+      "codigoEstacion": "EST-MZA-003",
+      "documentoCertificacionAdq": "DOC-MZA-2025",
+      "fechaSolicitudCertificacion": "2025-04-15T00:00:00",
+      "latitud": -32.8908,
+      "longitud": -68.8272,
+      "nombre": "Estación Sismológica Mendoza",
+      "nroCertificacionAdquisicion": "MZA-54321"
+    },
+    "empleado": {
+      "apellido": "Fernandez",
+      "mail": "ana.fernandez@gmail.com",
+      "nombre": "Ana",
+      "telefono": "3518378901",
+      "rol": {
+        "nombre": "Responsable de Inspeccion",
+        "descripcion": "Encargada de inscribir"
+      }
+    },
+    "usuario": {
+      "nombreUsuario": "AnaF",
+      "contrasenia": "pqr678",
+      "empleado": {
+        "apellido": "Fernandez",
+        "mail": "ana.fernandez@gmail.com",
+        "nombre": "Ana",
+        "telefono": "3518378901",
+        "rol": {
+          "nombre": "Responsable de Inspeccion",
+          "descripcion": "Encargada de inscribir"
+        }
+      }
+    },
+    "sesionActual": {
+      "fechaInicio": "2025-06-25T08:55:00.852963741",
+      "activo": true
+    },
+    "estado": {
+      "ambito": "OrdenInspeccion",
+      "nombreEstado": "CompletaRealizada"
+    }
+  },
+  {
+    "fechaHoraCierre": "2025-06-30T18:50:00",
+    "fechaHoraFinalizacion": "2025-06-30T18:20:00",
+    "fechaHoraInicio": "2025-06-30T09:10:00",
+    "nroOrden": 12,
+    "observacionCierre": "Aprobación pendiente.",
+    "estacionSismologica": {
+      "codigoEstacion": "EST-BA-002",
+      "documentoCertificacionAdq": "DOC-BSAS-2025-2",
+      "fechaSolicitudCertificacion": "2025-05-15T00:00:00",
+      "latitud": -34.6037,
+      "longitud": -58.3816,
+      "nombre": "Estación Sismológica Buenos Aires II",
+      "nroCertificacionAdquisicion": "BSAS-99887"
+    },
+    "empleado": {
+      "apellido": "Ruiz",
+      "mail": "juan.ruiz@gmail.com",
+      "nombre": "Juan",
+      "telefono": "3518389012",
+      "rol": {
+        "nombre": "Supervisor",
+        "descripcion": "Supervisa inspecciones"
+      }
+    },
+    "usuario": {
+      "nombreUsuario": "JuanR",
+      "contrasenia": "stu901",
+      "empleado": {
+        "apellido": "Ruiz",
+        "mail": "juan.ruiz@gmail.com",
+        "nombre": "Juan",
+        "telefono": "3518389012",
+        "rol": {
+          "nombre": "Supervisor",
+          "descripcion": "Supervisa inspecciones"
+        }
+      }
+    },
+    "sesionActual": {
+      "fechaInicio": "2025-06-30T08:40:00.963852741",
+      "activo": true
+    },
+    "estado": {
+      "ambito": "OrdenInspeccion",
+      "nombreEstado": "CompletaRealizada"
+    }
+  },
+  {
+    "fechaHoraCierre": "2025-07-05T18:30:00",
+    "fechaHoraFinalizacion": "2025-07-05T18:00:00",
+    "fechaHoraInicio": "2025-07-05T09:00:00",
+    "nroOrden": 13,
+    "observacionCierre": "Pendiente documentación.",
+    "estacionSismologica": {
+      "codigoEstacion": "EST-BA-002",
+      "documentoCertificacionAdq": "DOC-BSAS-2025-2",
+      "fechaSolicitudCertificacion": "2025-05-15T00:00:00",
+      "latitud": -34.6037,
+      "longitud": -58.3816,
+      "nombre": "Estación Sismológica Buenos Aires II",
+      "nroCertificacionAdquisicion": "BSAS-99887"
+    },
+    "empleado": {
+      "apellido": "Vega",
+      "mail": "maria.vega@gmail.com",
+      "nombre": "Maria",
+      "telefono": "3518390123",
+      "rol": {
+        "nombre": "Coordinador",
+        "descripcion": "Coordina inspecciones"
+      }
+    },
+    "usuario": {
+      "nombreUsuario": "MariaV",
+      "contrasenia": "vwx234",
+      "empleado": {
+        "apellido": "Vega",
+        "mail": "maria.vega@gmail.com",
+        "nombre": "Maria",
+        "telefono": "3518390123",
+        "rol": {
+          "nombre": "Coordinador",
+          "descripcion": "Coordina inspecciones"
+        }
+      }
+    },
+    "sesionActual": {
+      "fechaInicio": "2025-07-05T08:40:00.987654321",
       "activo": true
     },
     "estado": {

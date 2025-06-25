@@ -10,9 +10,31 @@ public class Rol {
         this.nombreRol = nombreRol;
         this.descripcionRol = descripcionRol;
     }
-    //metodos
+
+    //getters
     public String getNombreRol() {
         return nombreRol;
     }
 
+    public String getDescripcionRol() {
+        return descripcionRol;
+    }
+
+    //setters
+    public void setNombreRol(String nombreRol) {
+        this.nombreRol = nombreRol;
+    }
+
+    public void setDescripcionRol(String descripcionRol) {
+        this.descripcionRol = descripcionRol;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Rol{" +
+                "nombreRol='" + nombreRol + '\'' +
+                ", descripcionRol='" + descripcionRol + '\'' +
+                '}';
+    }
 }
