@@ -81,10 +81,10 @@ public class CambioEstado {
         return false;
     }
 
-    public CambioEstado crearCambioEstado(LocalDateTime fechaHoraInicio, Empleado responsable, MotivoFueraDeServicio motivoFueraDeServicio) { //metodo del Sismografo
-        // System.out.println("CAMBIO DE ESTADO CREADO");
-        return new CambioEstado(new Estado("Fuera de Servicio", "Sismografo"), responsable, fechaHoraInicio, motivoFueraDeServicio);
-    }
+//    public CambioEstado crearCambioEstado(LocalDateTime fechaHoraInicio, Empleado responsable, MotivoFueraDeServicio motivoFueraDeServicio) { //metodo del Sismografo
+//        // System.out.println("CAMBIO DE ESTADO CREADO");
+//        return new CambioEstado(new Estado("Fuera de Servicio", "Sismografo"), responsable, fechaHoraInicio, motivoFueraDeServicio);
+//    }
 
 
     @Override

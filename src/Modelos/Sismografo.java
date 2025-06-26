@@ -113,8 +113,14 @@ public class Sismografo {
 
         actualCambioEstado.setFechaHoraFin(fechaActual);
 
-        actualCambioEstado = actualCambioEstado.crearCambioEstado(fechaActual, responsable, motivoFueraDeServicio);
-        //System.out.println(actualCambioEstado.toString());
+        actualCambioEstado = this.crearCambioEstado(fechaActual, responsable, motivoFueraDeServicio);
+        // System.out.println(actualCambioEstado.toString());
+    }
+
+    public CambioEstado crearCambioEstado(LocalDateTime fechaHoraInicio, Empleado responsable, MotivoFueraDeServicio motivoFueraDeServicio) { //metodo del Sismografo
+        // System.out.println("CAMBIO DE ESTADO CREADO");
+        return new CambioEstado(new Estado("Fuera de Servicio", "Sismografo"), responsable, fechaHoraInicio, motivoFueraDeServicio);
+        // this.cambiosDeEstado.add(new CambioEstado(new Estado("Fuera de Servicio", "Sismografo"), responsable, fechaHoraInicio, motivoFueraDeServicio));
     }
 
     public CambioEstado buscarEstadoActual() {
