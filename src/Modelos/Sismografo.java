@@ -113,14 +113,32 @@ public class Sismografo {
 
         actualCambioEstado.setFechaHoraFin(fechaActual);
 
-        actualCambioEstado = this.crearCambioEstado(fechaActual, responsable, motivoFueraDeServicio);
+        actualCambioEstado = this.crearCambioEstadoFS(fechaActual, responsable, motivoFueraDeServicio);
         // System.out.println(actualCambioEstado.toString());
     }
 
-    public CambioEstado crearCambioEstado(LocalDateTime fechaHoraInicio, Empleado responsable, MotivoFueraDeServicio motivoFueraDeServicio) { //metodo del Sismografo
-        // System.out.println("CAMBIO DE ESTADO CREADO");
-        return new CambioEstado(new Estado("Fuera de Servicio", "Sismografo"), responsable, fechaHoraInicio, motivoFueraDeServicio);
-        // this.cambiosDeEstado.add(new CambioEstado(new Estado("Fuera de Servicio", "Sismografo"), responsable, fechaHoraInicio, motivoFueraDeServicio));
+    public void actualizarSismografoAOnline(Empleado responsable, LocalDateTime fechaActual) {
+        actualCambioEstado = buscarEstadoActual();
+
+        actualCambioEstado.setFechaHoraFin(fechaActual);
+
+        actualCambioEstado = this.crearCambioEstadoON(responsable, fechaActual);
+    }
+
+
+    public CambioEstado crearCambioEstadoFS(LocalDateTime fechaHoraInicio, Empleado responsable, MotivoFueraDeServicio motivoFueraDeServicio) { //metodo del Sismografo
+        CambioEstado nuevoCambioEstado = new CambioEstado(new Estado("Fuera de Servicio", "Sismografo"), responsable, fechaHoraInicio, motivoFueraDeServicio);
+        cambiosDeEstado.add(nuevoCambioEstado);
+        return nuevoCambioEstado;
+
+    }
+
+    public CambioEstado crearCambioEstadoON(Empleado responsable, LocalDateTime fechaHoraInicio) {
+        System.out.println("CAMBIO DE ESTADO CREADO");
+        CambioEstado nuevoCambioEstado = new CambioEstado(new Estado("Online", "Sismografo"), responsable, fechaHoraInicio);
+        cambiosDeEstado.add(nuevoCambioEstado);
+        return nuevoCambioEstado;
+
     }
 
     public CambioEstado buscarEstadoActual() {

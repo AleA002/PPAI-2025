@@ -141,6 +141,34 @@ public class PantallaCerrarOrdenInspeccion {
 
     }
 
+    public void mostrarMensajeSinOrdenes() {
+        JOptionPane.showMessageDialog(ventana,
+                "No tiene órdenes de inspección realizadas.",
+                "Atención",
+                JOptionPane.WARNING_MESSAGE);
+    }
+
+    public void pedirActualizacionEstadoSismografo() {
+        int opcion = JOptionPane.showOptionDialog(
+                ventana,
+                "¿Desea poner el sismógrafo Fuera de Servicio o Online?",
+                "Actualizar situación del sismógrafo",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                new String[]{"Fuera de Servicio", "En Línea"},
+                "En Línea"
+        );
+
+        if (opcion == 0) {
+            gestor.tomarDecisionEstadoSismografo(true); // Fuera de Servicio
+        } else {
+            gestor.tomarDecisionEstadoSismografo(false); // En Línea
+        }
+    }
+
+
+
     public void mostrarMotivosFueraServicio(List<String> listaMotivos) {
         panelContenedor.removeAll();
 
@@ -257,5 +285,11 @@ public class PantallaCerrarOrdenInspeccion {
         }
         gestor.tomarConfirmacionCierreOrdenInspeccion(); //Continua la ejecucion
     }
+
+    public void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(ventana, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+
 
 }

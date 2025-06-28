@@ -105,10 +105,17 @@ public class GestorCerrarOrdenInspeccion {
 
         buscarOrdenInspeccionRI(empleadoActual, listaOrdenesInspeccion);
         listaOrdenesInspeccionOrdenadas = ordenarOrdenInspeccionXFechaFinalizacion(listaOrdenesInspeccionCompletaRealizada);
+
+        // IMPLEMENTACION ALTERNATIVA 1
+        if (listaOrdenesInspeccionOrdenadas.isEmpty()) {
+            pantalla.mostrarMensajeSinOrdenes();
+            return; // <- FLUJO ALTERNATIVO A1
+        }
+
         listaOrdenesInspeccionAMostrar = obtenerDatosOrdenesInspeccionParaMostrar(listaOrdenesInspeccionOrdenadas);
         pantalla.mostrarOrdenesInspeccionCompletaRealizada(listaOrdenesInspeccionAMostrar);
-
     }
+
 
     public Empleado buscarEmpleado(Sesion sesionActual) {
         usuarioActualSesion = sesionActual.getUsuario();
@@ -171,12 +178,25 @@ public class GestorCerrarOrdenInspeccion {
         if (fila >= 0 && fila < listaOrdenesInspeccionOrdenadas.size()) {
             this.seleccionadaOrden = listaOrdenesInspeccionOrdenadas.get(fila);
             System.out.println("Seleccionaste orden: " + seleccionadaOrden.getNroOrden());
-            pantalla.pedirIngresarObservacionCierre();
+            pantalla.pedirActualizacionEstadoSismografo();
         } else {
             // Error defensivo
             System.err.println("Índice de fila fuera de rango: " + fila);
         }
 
+    }
+
+    public void tomarDecisionEstadoSismografo(boolean fueraDeServicio) {
+        if (fueraDeServicio) {
+        //    buscarTiposMotivosFueraServicio(listaTiposMotivos);
+            pantalla.pedirIngresarObservacionCierre();
+        } else {
+            sismografoSeleccionado = seleccionadaOrden.getSismografo();
+            fechaActual = getFechaActual();
+            sismografoSeleccionado.actualizarSismografoAOnline(empleadoActual, fechaActual);
+            System.out.println(sismografoSeleccionado.toString());
+            finCU();
+        }
     }
 
     public void tomarObservacionCierre(String textoObservacion) {
@@ -211,24 +231,35 @@ public class GestorCerrarOrdenInspeccion {
 
 
     public void tomarConfirmacionCierreOrdenInspeccion() {
-        validarObservacionCierreOrdenExistente();
-        validarMotivoSeleccionado(listaMotivosSeleccionados);
-    }
+        if (!validarObservacionCierreOrdenExistente()) return;
+        if (!validarMotivoSeleccionado()) return;
 
-    private void validarObservacionCierreOrdenExistente() {
-        if (observacionCierre == null) {
-            //System.out.println("No existe Observacion de Cierre de Orden");
-            System.exit(0);
-        }
-    }
-
-    private void validarMotivoSeleccionado(List<String> listaMotivosSeleccionados) {
-        if (listaMotivosSeleccionados.size() < 1) {
-            //System.out.println("No existe MotivosSeleccionados");
-            System.exit(0);
-        }
-        
         actualizarOrdenACerrada();
+    }
+
+    private boolean validarObservacionCierreOrdenExistente() {
+        if (observacionCierre == null || observacionCierre.trim().isEmpty()) {
+            pantalla.mostrarError("Debe ingresar una observación de cierre."); // ✅ delega en pantalla
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validarMotivoSeleccionado() {
+        if (listaMotivosSeleccionados == null || listaMotivosSeleccionados.isEmpty()) {
+            pantalla.mostrarError("Debe seleccionar al menos un motivo de fuera de servicio.");
+            return false;
+        }
+
+        for (int i = 0; i < listaMotivosSeleccionados.size(); i++) {
+            String comentario = listaComentarios.get(i);
+            if (comentario == null || comentario.trim().isEmpty()) {
+                pantalla.mostrarError("Debe ingresar un comentario para el motivo: " + listaMotivosSeleccionados.get(i));
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private void actualizarOrdenACerrada() {
