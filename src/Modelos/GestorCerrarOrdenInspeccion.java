@@ -5,11 +5,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 
 public class GestorCerrarOrdenInspeccion {
@@ -27,6 +31,7 @@ public class GestorCerrarOrdenInspeccion {
     private List<OrdenInspeccion> listaOrdenesInspeccionEmpleado;
     private List<OrdenInspeccion> listaOrdenesInspeccionCompletaRealizada;
     private List<OrdenInspeccion> listaOrdenesInspeccionOrdenadas;
+    private List<String[]> listaOrdenesInspeccionAMostrar;
     private OrdenInspeccion seleccionadaOrden;
     private String observacionCierre;
     private List<String> listaTiposMotivos;
@@ -51,6 +56,7 @@ public class GestorCerrarOrdenInspeccion {
         this.listaOrdenesInspeccionEmpleado = new ArrayList<>();
         this.listaOrdenesInspeccionCompletaRealizada = new ArrayList<>();
         this.listaOrdenesInspeccionOrdenadas = new ArrayList<>();
+        this.listaOrdenesInspeccionAMostrar = new ArrayList<>();
 
         this.seleccionadaOrden = null;
         this.observacionCierre = null;
@@ -99,7 +105,9 @@ public class GestorCerrarOrdenInspeccion {
 
         buscarOrdenInspeccionRI(empleadoActual, listaOrdenesInspeccion);
         listaOrdenesInspeccionOrdenadas = ordenarOrdenInspeccionXFechaFinalizacion(listaOrdenesInspeccionCompletaRealizada);
-        pantalla.mostrarOrdenesInspeccionCompletaRealizada(listaOrdenesInspeccionOrdenadas); //deberia ser String
+        listaOrdenesInspeccionAMostrar = obtenerDatosOrdenesInspeccionParaMostrar(listaOrdenesInspeccionOrdenadas);
+        pantalla.mostrarOrdenesInspeccionCompletaRealizada(listaOrdenesInspeccionAMostrar);
+
     }
 
     public Empleado buscarEmpleado(Sesion sesionActual) {
@@ -138,10 +146,37 @@ public class GestorCerrarOrdenInspeccion {
         return listaOrdenesInspeccionCompletaRealizada;
     }
 
-    public void tomarSeleccionOrdenInspeccion(OrdenInspeccion ordenSeleccionada) {
-        // System.out.println("Orden seleccionada por el usuario: " + ordenSeleccionada.getNroOrden());
-        seleccionadaOrden = ordenSeleccionada;
-        pantalla.pedirIngresarObservacionCierre();
+
+    public List<String[]> obtenerDatosOrdenesInspeccionParaMostrar(List <OrdenInspeccion> listaOrdenesInspeccionOrdenadas) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        List<String[]> datosFormateados = new ArrayList<>();
+
+        for (OrdenInspeccion o : listaOrdenesInspeccionOrdenadas) {
+            if (o.getEstado().getNombreEstado().equals("CompletaRealizada")) {
+                datosFormateados.add(new String[] {
+                        String.valueOf(o.getNroOrden()),
+                        o.getFechaHoraFinalizacion().format(formatter),
+                        o.getEstacionSismologica().getCodigoEstacion(),
+                        String.valueOf(o.getSismografo().getIdSismografo())
+                });
+            }
+        }
+
+        return datosFormateados;
+    }
+
+
+    public void tomarSeleccionOrdenInspeccion(int fila) {
+        if (fila >= 0 && fila < listaOrdenesInspeccionOrdenadas.size()) {
+            this.seleccionadaOrden = listaOrdenesInspeccionOrdenadas.get(fila);
+            System.out.println("Seleccionaste orden: " + seleccionadaOrden.getNroOrden());
+            pantalla.pedirIngresarObservacionCierre();
+        } else {
+            // Error defensivo
+            System.err.println("Índice de fila fuera de rango: " + fila);
+        }
+
     }
 
     public void tomarObservacionCierre(String textoObservacion) {

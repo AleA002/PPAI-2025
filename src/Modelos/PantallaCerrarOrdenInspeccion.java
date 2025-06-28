@@ -41,43 +41,25 @@ public class PantallaCerrarOrdenInspeccion {
         gestor.opcionCerrarOrdenDeInspeccion();
     }
 
-    public void mostrarOrdenesInspeccionCompletaRealizada(List<OrdenInspeccion> listaOrdenesInspeccionCompletaRealizada) {
+    public void mostrarOrdenesInspeccionCompletaRealizada(List<String[]> listaOrdenesInspeccionAMostrar) {
         panelContenedor.removeAll();
-
-        ordenesVisibles = new ArrayList<>();
-        List<Object[]> datosTabla = new ArrayList<>();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-
-        for (OrdenInspeccion o : listaOrdenesInspeccionCompletaRealizada) {
-            if (o.getEstado().getNombreEstado().equals("CompletaRealizada")) {
-                ordenesVisibles.add(o);
-                datosTabla.add(new Object[]{
-                        o.getNroOrden(),
-                        o.getFechaHoraFinalizacion().format(formatter),
-                        o.getEstacionSismologica().getCodigoEstacion(),
-                        o.getSismografo().getIdSismografo()
-                });
-            }
-        }
 
         String[] columnas = {
                 "Nro Orden", "Fin", "Código Estación", "ID Sismografo"
         };
 
-        Object[][] datos = datosTabla.toArray(new Object[0][]);
+        Object[][] datos = listaOrdenesInspeccionAMostrar.toArray(new Object[0][]);
 
         tablaOrdenes = new JTable(new DefaultTableModel(datos, columnas) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return column == 4;
+                return column == 4; // si después querés una columna editable
             }
 
             @Override
             public void setValueAt(Object value, int row, int column) {
                 super.setValueAt(value, row, column);
-                if (column == 4) {
-                    ordenesVisibles.get(row).setObservacionCierre(value.toString());
-                }
+                // Aquí ya no tenés el objeto OrdenInspeccion, así que esta parte habría que manejarla desde otro lado
             }
         });
 
@@ -111,15 +93,13 @@ public class PantallaCerrarOrdenInspeccion {
     }
 
     public void tomarSeleccionOrdenInspeccion(int fila) {
-        OrdenInspeccion ordenSeleccionada = ordenesVisibles.get(fila);
-        // Acá hacé lo que necesites con la orden seleccionada
-        JOptionPane.showMessageDialog(ventana, "Orden seleccionada:\nNro: " + ordenSeleccionada.getNroOrden(), "Orden Seleccionada", JOptionPane.INFORMATION_MESSAGE);
+        gestor.tomarSeleccionOrdenInspeccion(fila);
 
-        gestor.tomarSeleccionOrdenInspeccion(ordenSeleccionada);
 
     }
 
     public void pedirIngresarObservacionCierre() {
+        System.out.println("Entre aca");
         panelContenedor.removeAll();
 
         JLabel label = new JLabel("Ingrese la observación de cierre para la Orden");
